@@ -1,105 +1,228 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link rel="icon" href="favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
 <style>
-@font-face {
-   font-family: pornhut;
-   src: url(PORNHUT.TTF);
-}
-
-@font-face {
-   font-family: space;
-   src: url(SpaceMono-Regular.ttf);
-}
-
-*.a {
-   font-family: pornhut;
-
-}
-
-p {
-   font-family: space;
-   width: 80%;
-}
-
-.container {
-  position: relative;
-}
-
-.bottomright {
-  position: absolute;
-  bottom: -100px;
-  right: 200px;
-  font-size: 18px;
-}
+  :root {
+    --bg: #f5f3ee;
+    --text: #1a1a18;
+    --muted: #6b6b66;
+    --accent: #2a2a26;
+    --link: #1a4a8a;
+    --link-hover: #0d2e5c;
+    --border: rgba(0,0,0,0.12);
+    --toggle-bg: #dddbd5;
+    --toggle-thumb: #1a1a18;
+  }
+  [data-theme="dark"] {
+    --bg: #111110;
+    --text: #e8e6e0;
+    --muted: #888880;
+    --accent: #e8e6e0;
+    --link: #7aabdf;
+    --link-hover: #a8cdf0;
+    --border: rgba(255,255,255,0.1);
+    --toggle-bg: #333330;
+    --toggle-thumb: #e8e6e0;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .toggle {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--toggle-bg);
+    border: none;
+    border-radius: 20px;
+    width: 48px;
+    height: 26px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding: 3px;
+  }
+  .toggle::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--toggle-thumb);
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  [data-theme="dark"] .toggle::after {
+    transform: translateX(22px);
+  }
+  .toggle-label {
+    position: fixed;
+    top: 1.6rem;
+    right: 5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    user-select: none;
+  }
+  main {
+    max-width: 680px;
+    width: 100%;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: lowercase;
+    margin-bottom: 1.2rem;
+  }
+  h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 2rem;
+    color: var(--text);
+  }
+  .desc {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+    max-width: 560px;
+  }
+  .desc + .desc {
+    color: var(--muted);
+  }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 2.5rem 0;
+  }
+  .links-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    align-items: center;
+  }
+  .links-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem;
+  }
+  .links-label {
+    color: var(--muted);
+    margin-right: 0.4rem;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+  a {
+    color: var(--link);
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: 1px solid transparent;
+  }
+  a:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+  }
+  .sep {
+    color: var(--border);
+    margin: 0 0.6rem;
+    font-size: 14px;
+  }
+  .footer-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .flag {
+    width: 22px;
+    height: auto;
+    opacity: 0.85;
+  }
 </style>
 </head>
+<body>
+<span class="toggle-label" id="mode-label">light</span>
+<button class="toggle" id="toggle" aria-label="Toggle dark mode"></button>
 
+<main>
+  <p class="eyebrow">huff innovations llc</p>
+  <h1>hi.</h1>
 
-<body lang="en-US">
-<center>
+  <p class="desc">We are a small engineering firm focused on the design, prototyping, testing, and implementation of new products and ideas. Our design philosophy is focused around simplicity.</p>
 
-<! TOP>
-<h1 class="a" style="font-size: 222pt;font-weight: normal">
-  hi
-</h1>
+  <p class="desc">We also offer services specializing in network design, home automation &amp; lighting, and security systems — as well as marine applications including electrical wiring, audio installs, and custom lighting for your vessel.</p>
 
-<! MIDDLE>
-<h2 class="a" style="font-weight: normal">
-Welcome to huff innovations LLC.
-</h2>
+  <div class="divider"></div>
 
-<p>
-We are a small engineering firm focused on the design, prototyping, testing, and implantation of new products and ideas. Our design Philosophy is focused around simplicity.
-</p>
-<p>
-We also offer services specializing in Network Design, Home Automation & Lighting, and Security Systems; as well as Marine applications including Electrical Wiring, Audio installs, and Custom Lighting for your vessel.</p>
-<p><BR><BR></p>
+  <div class="links-row">
+    <div class="links-group">
+      <span class="links-label">friends —</span>
+      <a href="https://bostromlawfirm.com/">bostromlawfirm.com</a>
+      <span class="sep">·</span>
+      <a href="http://www.muddyriverdistillery.com">muddyriverdistillery.com</a>
+      <span class="sep">·</span>
+      <a href="https://wilkinsmotorsports.com">wilkinsmotorsports.com</a>
+    </div>
+    <span class="sep" style="margin: 0 0.8rem;">|</span>
+    <div class="links-group">
+      <span class="links-label">ours —</span>
+      <a href="cw.html">coconutwagon.com</a>
+    </div>
+    <span class="sep" style="margin: 0 0.8rem;">|</span>
+    <div class="links-group">
+      <span class="links-label">more —</span>
+      <a href="mailto:">email us</a>
+      <span class="sep">·</span>
+      <a href="http://huffisland.com">blog</a>
+    </div>
+  </div>
 
-<! BOTTOM>
-<hr  WIDTH="80%">
+  <div class="footer-meta">
+    <img src="images/flag.gif" class="flag" alt="USA flag">
+    <span>11.02.2020</span>
+  </div>
+</main>
 
-<table width="75%" cellpadding="4" cellspacing="0">
-	<td ALIGN="LEFT" VALIGN="TOP" width="20%">
-	<h3 class="a" style="font-weight: normal"> our friends stuff:</h3>
-  <p>
-	<a style="text-decoration:none" href="https://bostromlawfirm.com/">bostromlawfirm.com</a><BR>
-	<a style="text-decoration:none" href="http://www.muddyriverdistillery.com">muddyriverdistillery.com</a><BR>
-	<a style="text-decoration:none" href="https://wilkinsmotorsports.com">wilkinsmotorsports.com</a><BR>
-  </p>
-	</td>
-
-	<td ALIGN="CENTER" VALIGN="TOP" width="20"></td>
-	<td ALIGN="LEFT" VALIGN="TOP" WIDTH="20%">
-	<h3 class="a" style="font-weight: normal"> our stuff:</h3>
-  <p>
-	<a style="text-decoration:none" href="/cw.html">coconutwagon.com</a>
-  </p>
-  </td>
-
-	<td ALIGN="RIGHT" VALIGN="TOP" width="20">
-
-  </td>
-	<td ALIGN="LEFT" VALIGN="TOP" WIDTH="20%">
-	<h3 class="a" style="font-weight: normal"> other stuff:</h3>
-  <p>
-	<a class="a" style="text-decoration:none" a href=""> email us</a><BR>
-  <a style="text-decoration:none" href="http://huffisland.com">blog</a><BR>
-	11.02.2020<BR>
-  </p>
-	</td>
-</table>
-
-<hr  WIDTH="80%">
-
-</center>
+<script>
+  const toggle = document.getElementById('toggle');
+  const label = document.getElementById('mode-label');
+  const saved = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', saved);
+  label.textContent = saved;
+  toggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    label.textContent = next;
+    localStorage.setItem('theme', next);
+  });
+</script>
 </body>
-
-<! FLAG>
-<div class="container">
-  <div class="bottomright"><img src="images/flag.gif" alt="USA"width="84" height="42"></div>
-</div>
-
-
 </html>
